@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>不同市场环境下的策略表现对比表</title>
+<style>
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    background: #f5f6f8;
+    color: #1c1c1c;
+    margin: 0;
+    padding: 32px;
+  }
+  h1 {
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    color: #666;
+    font-size: 13px;
+    margin-bottom: 18px;
+  }
+  .legend {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .legend-item {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 2200px;
+    background: #fff;
+  }
+  th, td {
+    border: 1px solid #d9dce1;
+    vertical-align: top;
+    padding: 8px 10px;
+  }
+  thead th.dim-head {
+    background: #2b3a55;
+    color: #fff;
+    text-align: center;
+    font-size: 13px;
+    padding: 8px 6px;
+  }
+  .dim-en {
+    font-weight: 400;
+    font-size: 10.5px;
+    opacity: 0.8;
+  }
+  thead th.sub-head {
+    background: #435576;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 6px;
+    width: 200px;
+  }
+  thead th.corner {
+    background: #1c2540;
+    color: #fff;
+    text-align: center;
+    min-width: 160px;
+  }
+  td.strat-name {
+    background: #eef1f7;
+    font-weight: 600;
+    min-width: 160px;
+    position: sticky;
+    left: 0;
+  }
+  td.strat-name .cn {
+    font-size: 13.5px;
+  }
+  td.strat-name .en {
+    font-size: 10.5px;
+    color: #555;
+    font-weight: 400;
+    margin-top: 2px;
+  }
+  td.state-cell {
+    font-size: 12px;
+    line-height: 1.5;
+    width: 200px;
+    background: #fff;
+    color: #1c1c1c;
+  }
+  td.state-cell .phrase {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+  }
+  td.state-cell .rating-badge {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  td.state-cell .desc {
+    font-size: 11.5px;
+    color: #4a4a4a;
+  }
+  tbody tr:nth-child(even) td.strat-name {
+    background: #e3e8f2;
+  }
+</style>
+</head>
+<body>
+  <h1>不同市场环境下的策略表现对比表</h1>
+  <div class="subtitle">海外多策略对冲基金行业与产品调研 · 子专题材料 —— 8类子策略在5个市场环境维度下的有利/不利情形对比</div>
+  <div class="legend"><span class="legend-item" style="background:#2E7D32;color:#FFFFFF;">◎ 明显有利</span><span class="legend-item" style="background:#A5D6A7;color:#1B3D1B;">○ 较有利</span><span class="legend-item" style="background:#FFF59D;color:#5C5220;">△ 中性／视持仓而定</span><span class="legend-item" style="background:#FFAB91;color:#7A2E1A;">× 不利</span><span class="legend-item" style="background:#C62828;color:#FFFFFF;">×× 显著不利</span><span class="legend-item" style="background:#D1C4E9;color:#3A2D5C;">A／B（视情况而定） 双向或视持仓/时机而定</span></div>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th rowspan="2" class="corner">策略</th>
+        <th colspan="2" class="dim-head">股票市场方向<br><span class="dim-en">(Equity-Market Direction)</span></th><th colspan="2" class="dim-head">市场波动率<br><span class="dim-en">(Market Volatility)</span></th><th colspan="2" class="dim-head">市场趋势强度<br><span class="dim-en">(Trend Strength)</span></th><th colspan="2" class="dim-head">信用与融资条件<br><span class="dim-en">(Credit and Financing Conditions)</span></th><th colspan="2" class="dim-head">市场流动性<br><span class="dim-en">(Market Liquidity)</span></th>
+      </tr>
+      <tr>
+        <th class="sub-head">有利情形</th><th class="sub-head">不利情形</th><th class="sub-head">有利情形</th><th class="sub-head">不利情形</th><th class="sub-head">有利情形</th><th class="sub-head">不利情形</th><th class="sub-head">有利情形</th><th class="sub-head">不利情形</th><th class="sub-head">有利情形</th><th class="sub-head">不利情形</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="strat-name"><div class="cn">基本面股票多空策略</div><div class="en">Fundamental Equity Long/Short</div></td><td class="state-cell">
+        <span class="phrase" style="background:#A5D6A7;color:#1B3D1B;">温和上涨</span>
+        <div class="rating-badge" style="color:#2E7D32;">评级：较有利</div>
+        <div class="desc">多头观点更容易兑现</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">快速下跌</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">股票相关性上升，多头可能跌得比空头更多。市场中性程度越高，方向影响越小</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#A5D6A7;color:#1B3D1B;">适度波动</span>
+        <div class="rating-badge" style="color:#2E7D32;">评级：较有利</div>
+        <div class="desc">个股分化扩大，创造选股机会</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">极端波动</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">基本面定价可能失效，空头挤压和集中降仓风险上升</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#A5D6A7;color:#1B3D1B;">个股基本面趋势稳定</span>
+        <div class="rating-badge" style="color:#2E7D32;">评级：较有利</div>
+        <div class="desc">盈利改善或恶化能够持续反映</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#D1C4E9;color:#3A2D5C;">宏观单边趋势过强</span>
+        <div class="rating-badge" style="color:#5E35B1;">评级：不利／中性／视持仓而定（视情况而定）</div>
+        <div class="desc">市场方向可能压过个股差异</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#A5D6A7;color:#1B3D1B;">稳定</span>
+        <div class="rating-badge" style="color:#2E7D32;">评级：较有利</div>
+        <div class="desc">企业融资和估值环境正常</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">快速收紧</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">高杠杆、高估值和低质量股票可能剧烈重估，并引发投资单元（Pod）降险</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#A5D6A7;color:#1B3D1B;">充足</span>
+        <div class="rating-badge" style="color:#2E7D32;">评级：较有利</div>
+        <div class="desc">便于建立、调整多空头寸</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">枯竭</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">小盘股和拥挤空头难以退出，交易成本上升</div>
+    </td></tr><tr><td class="strat-name"><div class="cn">量化股票市场中性策略</div><div class="en">Quantitative Equity Market-Neutral</div></td><td class="state-cell">
+        <span class="phrase" style="background:#FFF59D;color:#5C5220;">常态市场</span>
+        <div class="rating-badge" style="color:#8A7315;">评级：中性／视持仓而定</div>
+        <div class="desc">影响通常较小，因为策略主动控制市场贝塔（Market Beta）</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">市场急跌</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">可能因相关性上升和去杠杆而亏损</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#A5D6A7;color:#1B3D1B;">适度波动</span>
+        <div class="rating-badge" style="color:#2E7D32;">评级：较有利</div>
+        <div class="desc">价格偏差和横截面分化增加</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">极端波动</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">历史因子关系可能失效，相似模型集中平仓</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#A5D6A7;color:#1B3D1B;">稳定的因子趋势</span>
+        <div class="rating-badge" style="color:#2E7D32;">评级：较有利</div>
+        <div class="desc">动量、价值和盈利修正信号更容易持续</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">频繁反转</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">模型不断调仓并产生交易损失</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#A5D6A7;color:#1B3D1B;">稳定</span>
+        <div class="rating-badge" style="color:#2E7D32;">评级：较有利</div>
+        <div class="desc">融资和保证金环境正常</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">融资收紧</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">杠杆成本、股票借券成本和保证金要求上升，市场中性组合也可能被迫减仓</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#2E7D32;color:#FFFFFF;">充足</span>
+        <div class="rating-badge" style="color:#1B5E20;">评级：明显有利</div>
+        <div class="desc">大量分散交易可以低成本执行</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#C62828;color:#FFFFFF;">不足</span>
+        <div class="rating-badge" style="color:#B71C1C;">评级：显著不利</div>
+        <div class="desc">成交冲击和交易成本可能超过模型预测收益</div>
+    </td></tr><tr><td class="strat-name"><div class="cn">并购套利策略</div><div class="en">Merger Arbitrage</div></td><td class="state-cell">
+        <span class="phrase" style="background:#A5D6A7;color:#1B3D1B;">稳定或温和上涨</span>
+        <div class="rating-badge" style="color:#2E7D32;">评级：较有利</div>
+        <div class="desc">企业信心和交易完成概率较高</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">快速下跌</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">融资可能失效，并购交易更容易延期、降价或取消</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#A5D6A7;color:#1B3D1B;">低至适度波动</span>
+        <div class="rating-badge" style="color:#2E7D32;">评级：较有利</div>
+        <div class="desc">交易价差通常平稳收敛</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">高波动</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">并购价差扩大，交易失败概率上升</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFF59D;color:#5C5220;">市场趋势本身影响有限</span>
+        <div class="rating-badge" style="color:#8A7315;">评级：中性／视持仓而定</div>
+        <div class="desc">但持续下跌趋势通常会降低收购意愿，提高交易失败风险</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">持续下跌趋势</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">降低收购意愿，提高交易失败风险</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#2E7D32;color:#FFFFFF;">宽松</span>
+        <div class="rating-badge" style="color:#1B5E20;">评级：明显有利</div>
+        <div class="desc">收购方容易获得贷款或发行债券</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#C62828;color:#FFFFFF;">收紧</span>
+        <div class="rating-badge" style="color:#B71C1C;">评级：显著不利</div>
+        <div class="desc">融资成本上升，杠杆收购可能无法完成</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#A5D6A7;color:#1B3D1B;">充足</span>
+        <div class="rating-badge" style="color:#2E7D32;">评级：较有利</div>
+        <div class="desc">便于调整目标公司与收购方对冲</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">不足</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">价差扩大，交易失败时难以及时退出</div>
+    </td></tr><tr><td class="strat-name"><div class="cn">困境债务与重组策略</div><div class="en">Distressed Debt and Restructuring</div></td><td class="state-cell">
+        <span class="phrase" style="background:#2E7D32;color:#FFFFFF;">市场触底并修复</span>
+        <div class="rating-badge" style="color:#1B5E20;">评级：明显有利</div>
+        <div class="desc">低价资产可能向回收价值重估</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">危机初期下跌</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">企业资产价值和债券价格继续下降</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#D1C4E9;color:#3A2D5C;">波动下降阶段</span>
+        <div class="rating-badge" style="color:#5E35B1;">评级：较有利／明显有利（视情况而定）</div>
+        <div class="desc">重组方案逐渐明确，错误定价开始修复</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">高波动初期</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">价格和回收预期继续恶化</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#2E7D32;color:#FFFFFF;">由恶化转向修复</span>
+        <div class="rating-badge" style="color:#1B5E20;">评级：明显有利</div>
+        <div class="desc">经营恢复和资产价格回升可以提高最终回收价值</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">持续恶化趋势</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">回收价值预期不断下调</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#D1C4E9;color:#3A2D5C;">充分调整后／信用修复期</span>
+        <div class="rating-badge" style="color:#5E35B1;">评级：较有利／明显有利（视情况而定）</div>
+        <div class="desc">会产生更多低价困境证券；重组融资和退出条件改善</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#C62828;color:#FFFFFF;">信用收紧初期</span>
+        <div class="rating-badge" style="color:#B71C1C;">评级：显著不利</div>
+        <div class="desc">违约增加、再融资困难</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#A5D6A7;color:#1B3D1B;">充足</span>
+        <div class="rating-badge" style="color:#2E7D32;">评级：较有利</div>
+        <div class="desc">便于建仓与调整头寸</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#C62828;color:#FFFFFF;">枯竭</span>
+        <div class="rating-badge" style="color:#B71C1C;">评级：显著不利</div>
+        <div class="desc">困境证券本身成交较少，若基金需要变现，可能只能大幅折价出售</div>
+    </td></tr><tr><td class="strat-name"><div class="cn">主观主题宏观策略</div><div class="en">Discretionary Thematic Macro</div></td><td class="state-cell">
+        <span class="phrase" style="background:#D1C4E9;color:#3A2D5C;">上涨或下跌均可能获利</span>
+        <div class="rating-badge" style="color:#5E35B1;">评级：中性／视持仓而定／较有利（视情况而定）</div>
+        <div class="desc">关键取决于投资组合经理（PM）是否正确判断方向并建立相应多空头寸</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">判断方向错误</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">多空头寸建立方向与实际走势相反，产生亏损</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#A5D6A7;color:#1B3D1B;">适度上升</span>
+        <div class="rating-badge" style="color:#2E7D32;">评级：较有利</div>
+        <div class="desc">政策和经济变化创造重新定价机会</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#D1C4E9;color:#3A2D5C;">极端跳跃</span>
+        <div class="rating-badge" style="color:#5E35B1;">评级：不利／较有利（视情况而定）</div>
+        <div class="desc">判断正确可能大赚，但判断错误或对冲不及时也可能大亏</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#2E7D32;color:#FFFFFF;">强趋势</span>
+        <div class="rating-badge" style="color:#1B5E20;">评级：明显有利</div>
+        <div class="desc">宏观主题更容易持续实现</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">无方向震荡</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">观点反复失效，交易容易连续止损</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#D1C4E9;color:#3A2D5C;">宽松或收紧本身均可交易</span>
+        <div class="rating-badge" style="color:#5E35B1;">评级：中性／视持仓而定／较有利（视情况而定）</div>
+        <div class="desc">关键在于能否提前判断信用周期变化</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">融资条件突然变化</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">会提高杠杆和保证金风险</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#A5D6A7;color:#1B3D1B;">充足</span>
+        <div class="rating-badge" style="color:#2E7D32;">评级：较有利</div>
+        <div class="desc">利率、外汇和指数头寸容易调整</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">枯竭</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">跨资产对冲关系可能失效，退出成本上升</div>
+    </td></tr><tr><td class="strat-name"><div class="cn">系统化分散宏观策略</div><div class="en">Systematic Diversified Macro</div></td><td class="state-cell">
+        <span class="phrase" style="background:#D1C4E9;color:#3A2D5C;">上涨或下跌均可获利</span>
+        <div class="rating-badge" style="color:#5E35B1;">评级：中性／视持仓而定／较有利（视情况而定）</div>
+        <div class="desc">模型可以双向交易；关键不是方向，而是方向是否持续</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">方向反复不持续</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">双向交易信号频繁失效</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#2E7D32;color:#FFFFFF;">波动逐渐上升且趋势持续</span>
+        <div class="rating-badge" style="color:#1B5E20;">评级：明显有利</div>
+        <div class="desc">最有利环境</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#D1C4E9;color:#3A2D5C;">快速反转／长期低波动</span>
+        <div class="rating-badge" style="color:#5E35B1;">评级：不利／中性／视持仓而定（视情况而定）</div>
+        <div class="desc">快速反转时模型可能来不及调整；长期低波动时可交易趋势和收益空间减少</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#2E7D32;color:#FFFFFF;">强而持续的趋势</span>
+        <div class="rating-badge" style="color:#1B5E20;">评级：明显有利</div>
+        <div class="desc">是最有利环境</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#C62828;color:#FFFFFF;">区间震荡</span>
+        <div class="rating-badge" style="color:#B71C1C;">评级：显著不利</div>
+        <div class="desc">模型容易追涨杀跌，产生震荡反复损失（Whipsaw Loss）</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFF59D;color:#5C5220;">持续宽松或紧缩</span>
+        <div class="rating-badge" style="color:#8A7315;">评级：中性／视持仓而定</div>
+        <div class="desc">可以形成趋势，影响取决于头寸方向</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFF59D;color:#5C5220;">突然转向</span>
+        <div class="rating-badge" style="color:#8A7315;">评级：中性／视持仓而定</div>
+        <div class="desc">可能造成多个市场同时反转</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#2E7D32;color:#FFFFFF;">充足</span>
+        <div class="rating-badge" style="color:#1B5E20;">评级：明显有利</div>
+        <div class="desc">模型能够按照规则及时调仓</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">不足</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">实际成交价偏离模型价格，交易成本增加</div>
+    </td></tr><tr><td class="strat-name"><div class="cn">固定收益相对价值策略</div><div class="en">Fixed-Income Relative Value</div></td><td class="state-cell">
+        <span class="phrase" style="background:#FFF59D;color:#5C5220;">常态市场</span>
+        <div class="rating-badge" style="color:#8A7315;">评级：中性／视持仓而定</div>
+        <div class="desc">直接影响通常较小，策略主要交易债券和利率工具间的价差</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">股票暴跌</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">可能通过避险、保证金和去杠杆间接冲击价差</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#A5D6A7;color:#1B3D1B;">低至适度波动</span>
+        <div class="rating-badge" style="color:#2E7D32;">评级：较有利</div>
+        <div class="desc">价差偏离后可以有序收敛</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#C62828;color:#FFFFFF;">极端波动</span>
+        <div class="rating-badge" style="color:#B71C1C;">评级：显著不利</div>
+        <div class="desc">基差和掉期利差可能继续扩大，低波动策略突然出现大额损失</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#A5D6A7;color:#1B3D1B;">平稳和缓慢变化</span>
+        <div class="rating-badge" style="color:#2E7D32;">评级：较有利</div>
+        <div class="desc">利率环境稳定，价差正常运作</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">利率快速单边变化</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">对冲误差、凸性差异和基差波动可能同时上升</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#2E7D32;color:#FFFFFF;">稳定且宽松</span>
+        <div class="rating-badge" style="color:#1B5E20;">评级：明显有利</div>
+        <div class="desc">有利于回购融资（Repo Financing）和杠杆头寸维持</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#C62828;color:#FFFFFF;">突然收紧</span>
+        <div class="rating-badge" style="color:#B71C1C;">评级：显著不利</div>
+        <div class="desc">融资成本、抵押品折扣和保证金要求上升，可能被迫平仓</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#2E7D32;color:#FFFFFF;">充足</span>
+        <div class="rating-badge" style="color:#1B5E20;">评级：明显有利</div>
+        <div class="desc">相关工具间的套利能够正常运作</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#C62828;color:#FFFFFF;">枯竭</span>
+        <div class="rating-badge" style="color:#B71C1C;">评级：显著不利</div>
+        <div class="desc">价差可能越走越宽，且无法等待最终收敛</div>
+    </td></tr><tr><td class="strat-name"><div class="cn">可转换债券套利策略</div><div class="en">Convertible Arbitrage</div></td><td class="state-cell">
+        <span class="phrase" style="background:#A5D6A7;color:#1B3D1B;">温和上涨或双向波动</span>
+        <div class="rating-badge" style="color:#2E7D32;">评级：较有利</div>
+        <div class="desc">转股期权价值和动态对冲机会增加</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">暴跌</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">发行人信用恶化，股票跳空，对冲可能失效</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#2E7D32;color:#FFFFFF;">实际波动率高于买入时隐含波动率</span>
+        <div class="rating-badge" style="color:#1B5E20;">评级：明显有利</div>
+        <div class="desc">动态对冲更可能获利</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#D1C4E9;color:#3A2D5C;">低波动／极端波动</span>
+        <div class="rating-badge" style="color:#5E35B1;">评级：不利／较有利（视情况而定）</div>
+        <div class="desc">低波动时对冲收益不足；极端波动时信用价值上升，但流动性和跳跃风险也会明显增加</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#A5D6A7;color:#1B3D1B;">平滑波动</span>
+        <div class="rating-badge" style="color:#2E7D32;">评级：较有利</div>
+        <div class="desc">便于动态调整德尔塔（Delta）</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#FFAB91;color:#7A2E1A;">快速单边跳跃</span>
+        <div class="rating-badge" style="color:#C1440E;">评级：不利</div>
+        <div class="desc">股票敏感度突变，对冲调整不及时</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#D1C4E9;color:#3A2D5C;">稳定</span>
+        <div class="rating-badge" style="color:#5E35B1;">评级：较有利／明显有利（视情况而定）</div>
+        <div class="desc">信用利差和股票借券条件较常</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#C62828;color:#FFFFFF;">收紧</span>
+        <div class="rating-badge" style="color:#B71C1C;">评级：显著不利</div>
+        <div class="desc">可转换债券信用部分下跌，融资与借券成本同时上升</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#2E7D32;color:#FFFFFF;">充足</span>
+        <div class="rating-badge" style="color:#1B5E20;">评级：明显有利</div>
+        <div class="desc">便于交易债券并动态调整股票空头</div>
+    </td><td class="state-cell">
+        <span class="phrase" style="background:#C62828;color:#FFFFFF;">枯竭</span>
+        <div class="rating-badge" style="color:#B71C1C;">评级：显著不利</div>
+        <div class="desc">可转换债券难以出售，股票空头也可能无法调整</div>
+    </td></tr>
+    </tbody>
+  </table>
+  </div>
+</body>
+</html>
