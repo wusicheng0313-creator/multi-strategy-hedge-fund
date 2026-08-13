@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>千禧管理 全公司 历年收益率</title>
+<style>
+  .viz-root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --page-plane:     #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --gridline:       #e1e0d9;
+    --baseline:       #c3c2b7;
+    --series-1:       #2a78d6;
+    --series-1-low:   #9ec5f4;
+    --critical:       #d03b3b;
+    --border:         rgba(11,11,11,0.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) .viz-root {
+      color-scheme: dark;
+      --surface-1:      #1a1a19;
+      --page-plane:     #0d0d0d;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted:     #898781;
+      --gridline:       #2c2c2a;
+      --baseline:       #383835;
+      --series-1:       #3987e5;
+      --series-1-low:   #184f95;
+      --critical:       #e66767;
+      --border:         rgba(255,255,255,0.10);
+    }
+  }
+  :root[data-theme="dark"] .viz-root {
+    color-scheme: dark;
+    --surface-1:      #1a1a19;
+    --page-plane:     #0d0d0d;
+    --text-primary:   #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted:     #898781;
+    --gridline:       #2c2c2a;
+    --baseline:       #383835;
+    --series-1:       #3987e5;
+    --series-1-low:   #184f95;
+    --critical:       #e66767;
+    --border:         rgba(255,255,255,0.10);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 32px 16px;
+    background: var(--page-plane);
+    font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    display: flex;
+    justify-content: center;
+  }
+  .card {
+    width: 100%;
+    max-width: 880px;
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 28px 20px;
+  }
+  .title { font-size: 18px; font-weight: 600; color: var(--text-primary); margin: 0 0 4px; }
+  .subtitle { font-size: 13px; color: var(--text-secondary); margin: 0 0 10px; line-height: 1.5; }
+  .callout {
+    font-size: 12px; color: var(--text-secondary); background: var(--page-plane);
+    border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px;
+    margin: 0 0 18px; line-height: 1.6;
+  }
+  .callout b { color: var(--text-primary); }
+  .toolbar { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 8px; }
+  .toggle-btn {
+    font-size: 12px; color: var(--text-secondary); background: transparent;
+    border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px;
+    cursor: pointer; font-family: inherit;
+  }
+  .toggle-btn:hover { color: var(--text-primary); border-color: var(--text-secondary); }
+
+  svg { display: block; overflow: visible; }
+  .gridline { stroke: var(--gridline); stroke-width: 1; }
+  .baseline { stroke: var(--baseline); stroke-width: 1; }
+  .axis-label { fill: var(--text-muted); font-size: 11px; }
+  .bar { rx: 4; }
+  .bar.pos { fill: var(--series-1); }
+  .bar.pos.low-conf { fill: var(--series-1-low); }
+  .bar.neg { fill: var(--critical); }
+  .bar-hit { fill: transparent; cursor: pointer; }
+  .bar-label { fill: var(--text-primary); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .bar-label.neg { fill: var(--critical); }
+  .year-label { fill: var(--text-secondary); font-size: 11px; }
+
+  .tooltip {
+    position: absolute; pointer-events: none; background: var(--surface-1);
+    border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px;
+    font-size: 12px; color: var(--text-primary); box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    opacity: 0; transition: opacity 0.1s ease; max-width: 260px; line-height: 1.5; z-index: 10;
+  }
+  .tooltip-year { font-weight: 600; margin-bottom: 2px; }
+  .tooltip-val { font-weight: 600; }
+  .tooltip-src { color: var(--text-muted); font-size: 11px; margin-top: 2px; }
+
+  .legend-note { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted); margin-top: 14px; }
+  .legend-swatch { width: 10px; height: 8px; border-radius: 2px; display: inline-block; }
+  .legend-swatch.high { background: var(--series-1); }
+  .legend-swatch.low { background: var(--series-1-low); }
+  .legend-swatch.neg { background: var(--critical); }
+
+  .footnote { font-size: 11px; color: var(--text-muted); margin-top: 16px; line-height: 1.7; border-top: 1px solid var(--gridline); padding-top: 12px; }
+  .footnote a { color: var(--text-muted); }
+
+  table.data-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px; }
+  table.data-table th, table.data-table td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--gridline); color: var(--text-secondary); }
+  table.data-table th { color: var(--text-muted); font-weight: 500; font-size: 11px; }
+  table.data-table td:first-child, table.data-table td:nth-child(2) { color: var(--text-primary); font-variant-numeric: tabular-nums; }
+  table.data-table a { color: var(--text-secondary); }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<div class="viz-root">
+  <div class="card">
+    <p class="title">千禧管理（Millennium Management）全公司历年收益率</p>
+    <p class="subtitle">按自然年计，%。仅展示已查证到具体数字的年份，柱状图之间的空白年份已跳过（不代表收益为零），悬停/查看数据表可看逐条来源。</p>
+    <div class="callout">
+      <b>口径说明：</b>历史上千禧只运营一只对外旗舰基金（Millennium USA, L.P. / Millennium International, Ltd.，前身Millennium Partners, L.P.），媒体披露的"公司整体收益"与"旗舰基金投资者收益"实质是同一个数字。不包含在内的部分：WorldQuant Millennium Advisors合资体管理的外部资金、约550亿美元名义资产的外部管理人SMA配置（两者收益是否并表未公开披露），以及2026年起新设的Millennium Opportunities Fund（私募信贷/低流动性资产，独立产品线，尚无历史收益数字）。
+    </div>
+    <div class="toolbar"><button class="toggle-btn" id="viewToggle">查看数据表</button></div>
+
+    <div id="chartWrap" style="position:relative;">
+      <svg id="chart" viewBox="0 0 800 340" width="100%" height="340" role="img" aria-label="千禧管理全公司历年收益率柱状图"></svg>
+      <div class="tooltip" id="tooltip"></div>
+    </div>
+
+    <div class="legend-note">
+      <span class="legend-swatch high"></span><span>正收益（较可靠来源）</span>
+      <span class="legend-swatch low"></span><span>正收益（单一二手来源，置信度较低）</span>
+      <span class="legend-swatch neg"></span><span>负收益</span>
+    </div>
+
+    <div id="tableWrap" class="hidden"><table class="data-table" id="dataTable"></table></div>
+
+    <div class="footnote">
+      数据来源：TheWealthAdvisor<a href="https://www.thewealthadvisor.com/article/millennium-management-has-built-its-success-one-straightforward-approach" target="_blank">↗</a>（2000、2022、2023年）；
+      Clearbrook Global<a href="https://www.clearbrookglobal.com/citadel-millennium-d-e-shaw-post-20-plus-returns-in-20/" target="_blank">↗</a>（2020年）；
+      Grokipedia<a href="https://grokipedia.com/page/millennium_management" target="_blank">↗</a>（2008、2021年，AI聚合百科，单一二手来源，置信度较低）；
+      Hedgeweek<a href="https://www.hedgeweek.com/millennium-posts-15-2024-gain-but-lags-sp-500/" target="_blank">↗</a> 与 Bloomberg<a href="https://bloomberg.com/news/articles/2025-01-02/multistrategy-hedge-funds-from-d-e-shaw-to-exoduspoint-delivered-in-2024" target="_blank">↗</a>（2024年，两个一线信源交叉印证）；
+      Fortune<a href="https://www.fortune.com/2026/01/02/top-hedge-fund-performers-2025-bridgewater-de-shaw-citadel-millennium" target="_blank">↗</a> 与 Yahoo Finance<a href="https://finance.yahoo.com/news/2025-returns-hedge-funds-rolling-234728986.html" target="_blank">↗</a>（2025年，两个信源交叉印证）；
+      Briefs.co<a href="https://www.briefs.co/news/millennium-aims-for-10-billion-capital-raise-in-2026/" target="_blank">↗</a>（2026年，年初至5月，非完整年度数据）；
+      Hedgeweek「Millennium mulls first fund in more than 30 years」<a href="https://www.hedgeweek.com/millennium-mulls-first-found-in-more-than-30-years/" target="_blank">↗</a>（"目前只运营一只旗舰基金"表述来源）。检索时间2026年8月，具体数字可能已变化。
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const data = [
+    { year: "2000", ret: 35, note: "公司历史最佳单年（互联网泡沫时期）", src: "TheWealthAdvisor", link: "https://www.thewealthadvisor.com/article/millennium-management-has-built-its-success-one-straightforward-approach", conf: "high" },
+    { year: "2008", ret: -3, note: "公司历史唯一亏损年份（金融危机，同期标普500跌约38%）；另有第三方口径给出-6.61%或最大回撤-7.24%，数字不完全一致", src: "Grokipedia（低置信度）", link: "https://grokipedia.com/page/millennium_management", conf: "neg" },
+    { year: "2020", ret: 25.8, note: "AUM当时约467亿美元；同期Citadel Wellington 24.4%、D.E. Shaw Oculus 25.4%", src: "Clearbrook Global", link: "https://www.clearbrookglobal.com/citadel-millennium-d-e-shaw-post-20-plus-returns-in-20/", conf: "high" },
+    { year: "2021", ret: 13.61, note: "单一来源，未找到其他信源交叉验证", src: "Grokipedia（低置信度）", link: "https://grokipedia.com/page/millennium_management", conf: "low" },
+    { year: "2022", ret: 12, note: "同期标普500下跌约19%", src: "TheWealthAdvisor", link: "https://www.thewealthadvisor.com/article/millennium-management-has-built-its-success-one-straightforward-approach", conf: "high" },
+    { year: "2023", ret: 10, note: "", src: "TheWealthAdvisor", link: "https://www.thewealthadvisor.com/article/millennium-management-has-built-its-success-one-straightforward-approach", conf: "high" },
+    { year: "2024", ret: 15, note: "自2020年以来最佳单年；同期标普500上涨23%", src: "Hedgeweek + Bloomberg（两信源交叉印证）", link: "https://www.hedgeweek.com/millennium-posts-15-2024-gain-but-lags-sp-500/", conf: "high" },
+    { year: "2025", ret: 10.5, note: "同组ExodusPoint 18.0%、Point72 17.5%、标普500 16.4%", src: "Fortune + Yahoo Finance（两信源交叉印证）", link: "https://www.fortune.com/2026/01/02/top-hedge-fund-performers-2025-bridgewater-de-shaw-citadel-millennium", conf: "high" },
+    { year: "2026*", ret: 6.1, note: "*非完整年度数据，为2026年初至5月累计，5月单月+2.4%", src: "Briefs.co", link: "https://www.briefs.co/news/millennium-aims-for-10-billion-capital-raise-in-2026/", conf: "high" }
+  ];
+
+  const svg = document.getElementById('chart');
+  const NS = "http://www.w3.org/2000/svg";
+  const W = 800, H = 340;
+  const marginLeft = 40, marginRight = 20, marginTop = 20, marginBottom = 40;
+  const plotW = W - marginLeft - marginRight;
+  const plotH = H - marginTop - marginBottom;
+
+  const yMin = -10, yMax = 40;
+  function yScale(v) { return marginTop + plotH - (v - yMin) / (yMax - yMin) * plotH; }
+  const zeroY = yScale(0);
+
+  const n = data.length;
+  const bandW = plotW / n;
+  const barW = Math.min(40, bandW * 0.5);
+
+  function el(tag, attrs) {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+
+  const yTicks = [-10, 0, 10, 20, 30, 40];
+  yTicks.forEach(t => {
+    const y = yScale(t);
+    svg.appendChild(el('line', { x1: marginLeft, x2: W - marginRight, y1: y, y2: y, class: t === 0 ? 'baseline' : 'gridline' }));
+    const label = el('text', { x: marginLeft - 8, y: y + 4, class: 'axis-label', 'text-anchor': 'end' });
+    label.textContent = t + '%';
+    svg.appendChild(label);
+  });
+
+  const tooltip = document.getElementById('tooltip');
+  const chartWrap = document.getElementById('chartWrap');
+
+  data.forEach((d) => {
+    const cx = marginLeft + bandW * data.indexOf(d) + bandW / 2;
+    const barY = d.ret >= 0 ? yScale(d.ret) : zeroY;
+    const barH = Math.abs(yScale(d.ret) - zeroY);
+    const cls = d.conf === 'neg' ? 'bar neg' : (d.conf === 'low' ? 'bar pos low-conf' : 'bar pos');
+    const bar = el('rect', { x: cx - barW / 2, y: barY, width: barW, height: Math.max(barH, 2), rx: 4, class: cls });
+    svg.appendChild(bar);
+
+    const labelY = d.ret >= 0 ? barY - 8 : barY + barH + 16;
+    const label = el('text', { x: cx, y: labelY, class: 'bar-label' + (d.ret < 0 ? ' neg' : ''), 'text-anchor': 'middle' });
+    label.textContent = (d.ret > 0 ? '+' : '') + d.ret + '%';
+    svg.appendChild(label);
+
+    const yearLabel = el('text', { x: cx, y: H - marginBottom + 18, class: 'year-label', 'text-anchor': 'middle' });
+    yearLabel.textContent = d.year;
+    svg.appendChild(yearLabel);
+
+    const hit = el('rect', { x: cx - bandW / 2, y: marginTop, width: bandW, height: plotH, class: 'bar-hit' });
+    hit.addEventListener('mouseenter', () => showTooltip(d, cx, barY));
+    hit.addEventListener('mousemove', () => positionTooltip(cx, barY));
+    hit.addEventListener('mouseleave', hideTooltip);
+    svg.appendChild(hit);
+  });
+
+  function showTooltip(d, cx, cy) {
+    tooltip.innerHTML = `<div class="tooltip-year">${d.year}</div>` +
+      `<div class="tooltip-val">${(d.ret > 0 ? '+' : '') + d.ret}%</div>` +
+      (d.note ? `<div>${d.note}</div>` : '') +
+      `<div class="tooltip-src">来源：<a href="${d.link}" target="_blank" style="color:inherit;">${d.src}</a></div>`;
+    positionTooltip(cx, cy);
+    tooltip.style.opacity = 1;
+  }
+  function positionTooltip(cx, cy) {
+    const scaleX = chartWrap.clientWidth / W;
+    let left = cx * scaleX - 100;
+    let top = Math.max(cy * scaleX - 90, 0);
+    left = Math.max(8, Math.min(left, chartWrap.clientWidth - 268));
+    tooltip.style.left = left + 'px';
+    tooltip.style.top = top + 'px';
+  }
+  function hideTooltip() { tooltip.style.opacity = 0; }
+
+  const table = document.getElementById('dataTable');
+  let thead = '<tr><th>年份</th><th>收益率</th><th>说明</th><th>来源</th></tr>';
+  let rows = data.map(d => `<tr><td>${d.year}</td><td>${(d.ret>0?'+':'')+d.ret}%</td><td>${d.note || '—'}</td><td><a href="${d.link}" target="_blank">${d.src}</a></td></tr>`).join('');
+  table.innerHTML = thead + rows;
+
+  const toggleBtn = document.getElementById('viewToggle');
+  const tableWrap = document.getElementById('tableWrap');
+  let showingTable = false;
+  toggleBtn.addEventListener('click', () => {
+    showingTable = !showingTable;
+    tableWrap.classList.toggle('hidden', !showingTable);
+    chartWrap.classList.toggle('hidden', showingTable);
+    document.querySelector('.legend-note').classList.toggle('hidden', showingTable);
+    toggleBtn.textContent = showingTable ? '查看图表' : '查看数据表';
+  });
+})();
+</script>
+</body>
+</html>
