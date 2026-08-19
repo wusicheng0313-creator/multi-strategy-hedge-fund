@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Citadel 公司整体历年表现（累计净利润口径）</title>
+<style>
+  .viz-root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --page-plane:     #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --gridline:       #e1e0d9;
+    --baseline:       #c3c2b7;
+    --series-1:       #2a78d6;
+    --border:         rgba(11,11,11,0.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) .viz-root {
+      color-scheme: dark;
+      --surface-1:      #1a1a19; --page-plane: #0d0d0d; --text-primary: #ffffff;
+      --text-secondary: #c3c2b7; --text-muted: #898781; --gridline: #2c2c2a;
+      --baseline: #383835; --series-1: #3987e5; --border: rgba(255,255,255,0.10);
+    }
+  }
+  :root[data-theme="dark"] .viz-root {
+    color-scheme: dark;
+    --surface-1: #1a1a19; --page-plane: #0d0d0d; --text-primary: #ffffff;
+    --text-secondary: #c3c2b7; --text-muted: #898781; --gridline: #2c2c2a;
+    --baseline: #383835; --series-1: #3987e5; --border: rgba(255,255,255,0.10);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 16px; background: var(--page-plane);
+    font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    display: flex; justify-content: center;
+  }
+  .card { width: 100%; max-width: 820px; background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 28px 28px 20px; }
+  .title { font-size: 18px; font-weight: 600; color: var(--text-primary); margin: 0 0 4px; }
+  .subtitle { font-size: 13px; color: var(--text-secondary); margin: 0 0 20px; line-height: 1.5; }
+  svg { display: block; overflow: visible; }
+  .gridline { stroke: var(--gridline); stroke-width: 1; }
+  .baseline { stroke: var(--baseline); stroke-width: 1; }
+  .axis-label { fill: var(--text-muted); font-size: 11px; }
+  .bar { fill: var(--series-1); rx: 4; }
+  .bar-hit { fill: transparent; cursor: pointer; }
+  .bar-label { fill: var(--text-primary); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .year-label { fill: var(--text-secondary); font-size: 11px; }
+  .tooltip {
+    position: absolute; pointer-events: none; background: var(--surface-1);
+    border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px;
+    font-size: 12px; color: var(--text-primary); box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    opacity: 0; transition: opacity 0.1s ease; max-width: 280px; line-height: 1.5; z-index: 10;
+  }
+  .tooltip-year { font-weight: 600; margin-bottom: 2px; }
+  .tooltip-val { font-weight: 600; }
+  .tooltip-src { color: var(--text-muted); font-size: 11px; margin-top: 2px; }
+  .footnote { font-size: 11px; color: var(--text-muted); margin-top: 16px; line-height: 1.7; border-top: 1px solid var(--gridline); padding-top: 12px; }
+  .footnote a { color: var(--text-muted); }
+</style>
+</head>
+<body>
+<div class="viz-root">
+  <div class="card">
+    <p class="title">Citadel 公司整体历年表现——累计净利润口径</p>
+    <p class="subtitle">单位：十亿美元。这是公司整体层面唯一能查到的、独立于单只基金的业绩指标（据LCH Investments"全球对冲基金累计净利润排名"逐年统计），与"逐年收益率百分比"是不同维度，不可与Wellington基金的百分比收益率直接比较。2010-2015年、2019-2021年因未查到含具体数字的可访问一手报道，暂缺。悬停查看逐条说明。</p>
+    <div id="chartWrap" style="position:relative;">
+      <svg id="chart" viewBox="0 0 780 320" width="100%" height="320" role="img" aria-label="Citadel公司整体累计净利润柱状图"></svg>
+      <div class="tooltip" id="tooltip"></div>
+    </div>
+    <div class="footnote">
+      数据来源：Forbes《Quants Start To Take Over List Of Most Successful Hedge Funds》<a href="https://www.forbes.com/sites/nathanvardi/2017/02/01/quants-start-to-take-over-list-of-most-successful-hedge-funds/" target="_blank">↗</a>（截至2016年）；
+      Institutional Investor《The Rich List》<a href="https://www.institutionalinvestor.com/article/2bstpd4t08pc8xwj4we80/portfolio/the-rich-list" target="_blank">↗</a>（截至2017年）；
+      Institutional Investor《The Best Hedge Fund Manager of All Time Is…》<a href="https://www.institutionalinvestor.com/article/2bswhgrmp6rwew5okdo8w/portfolio/the-best-hedge-fund-manager-of-all-time-is" target="_blank">↗</a>（截至2018年）；
+      Forbes《Citadel's $16 Billion Gain In 2022...》<a href="https://www.forbes.com/sites/hanktucker/2023/01/22/citadels-16-billion-gain-in-2022-makes-ken-griffins-firm-the-top-earning-hedge-fund-ever/" target="_blank">↗</a>（截至2022年）；
+      Institutional Investor《Ken Griffin Is the Top Money Manager Again》<a href="https://www.institutionalinvestor.com/article/2cqvcuzt7kd6hdnsys2yo/portfolio/ken-griffin-is-the-top-money-manager-again" target="_blank">↗</a>（截至2023年）；
+      Forbes《Citadel, D.E. Shaw And The World's Top 20...》<a href="https://www.forbes.com/sites/hanktucker/2025/01/19/citadel-de-shaw-and-the-worlds-top-20-hedge-funds-gained-a-record-94-billion-in-2024/" target="_blank">↗</a>（截至2024年）；
+      Institutional Investor《Chris Hohn's TCI Tops Hedge Fund Gains in 2025》<a href="https://www.institutionalinvestor.com/article/chris-hohns-tci-tops-hedge-fund-gains-2025" target="_blank">↗</a>（截至2025年）。
+      以上数据点均转引自LCH Investments每年发布的行业排名，经第三方媒体独立报道，非Citadel自我披露。2010-2015年、2019-2021年因未查到含具体累计数字的可访问一手报道，暂缺，不代表该期间无增长。检索时间2026年8月，具体数字可能已变化。
+    </div>
+  </div>
+</div>
+<script>
+(function() {
+  const data = [
+    { year: "截至2016年底", val: 25.2, note: "\"Citadel...is fifth with $25.2 billion in net gains.\"", src: "Forbes（转引LCH Investments）", link: "https://www.forbes.com/sites/nathanvardi/2017/02/01/quants-start-to-take-over-list-of-most-successful-hedge-funds/" },
+    { year: "截至2017年底", val: 28.6, note: "\"The multi-strategy manager has now produced gains totaling $28.6 billion since inception.\"", src: "Institutional Investor（转引LCH Investments）", link: "https://www.institutionalinvestor.com/article/2bstpd4t08pc8xwj4we80/portfolio/the-rich-list" },
+    { year: "截至2018年底", val: 30.7, note: "\"Ken Griffin's Citadel remains third overall at $30.7 billion since inception, after making $2.1 billion for investors last year.\"", src: "Institutional Investor（转引LCH Investments）", link: "https://www.institutionalinvestor.com/article/2bswhgrmp6rwew5okdo8w/portfolio/the-best-hedge-fund-manager-of-all-time-is" },
+    { year: "截至2022年底", val: 65.9, note: "2022年单年净利润160亿美元，超越此前纪录保持者John Paulson 2007年150亿美元的\"史上最伟大交易\"；同年超越Bridgewater登顶历史累计利润第一", src: "Forbes（转引LCH Investments）", link: "https://www.forbes.com/sites/hanktucker/2023/01/22/citadels-16-billion-gain-in-2022-makes-ken-griffins-firm-the-top-earning-hedge-fund-ever/" },
+    { year: "截至2023年底", val: 74, note: "\"Citadel earned $8.1 billion for investors in 2023 and $74 billion since inception in 1990.\"", src: "Institutional Investor（转引LCH Investments）", link: "https://www.institutionalinvestor.com/article/2cqvcuzt7kd6hdnsys2yo/portfolio/ken-griffin-is-the-top-money-manager-again" },
+    { year: "截至2024年底", val: 83, note: "\"comfortably in first place\"（稳居第一）；对比乔治·索罗斯量子基金40年累计约438亿美元，Citadel现累计利润已达其近两倍；年化19.5%", src: "Forbes（转引LCH Investments）", link: "https://www.forbes.com/sites/hanktucker/2025/01/19/citadel-de-shaw-and-the-worlds-top-20-hedge-funds-gained-a-record-94-billion-in-2024/" },
+    { year: "截至2025年底", val: 90.4, note: "\"Ken Griffin's Citadel maintained its perch at the top, making $90.4 billion for investors since it launched in 1990.\"", src: "Institutional Investor（转引LCH Investments）", link: "https://www.institutionalinvestor.com/article/chris-hohns-tci-tops-hedge-fund-gains-2025" }
+  ];
+  const svg = document.getElementById('chart');
+  const NS = "http://www.w3.org/2000/svg";
+  const W = 780, H = 320;
+  const marginLeft = 50, marginRight = 40, marginTop = 20, marginBottom = 44;
+  const plotW = W - marginLeft - marginRight, plotH = H - marginTop - marginBottom;
+  const yMax = 100;
+  function yScale(v) { return marginTop + plotH - (v / yMax) * plotH; }
+  const n = data.length, bandW = plotW / n, barW = Math.min(140, bandW * 0.4);
+  function el(tag, attrs) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; }
+  [0,20,40,60,80,100].forEach(t => {
+    const y = yScale(t);
+    svg.appendChild(el('line', { x1: marginLeft, x2: W - marginRight, y1: y, y2: y, class: t === 0 ? 'baseline' : 'gridline' }));
+    const label = el('text', { x: marginLeft - 8, y: y + 4, class: 'axis-label', 'text-anchor': 'end' });
+    label.textContent = '$' + t + 'B'; svg.appendChild(label);
+  });
+  const tooltip = document.getElementById('tooltip'), chartWrap = document.getElementById('chartWrap');
+  data.forEach((d, i) => {
+    const cx = marginLeft + bandW * i + bandW / 2;
+    const barY = yScale(d.val), barH = yScale(0) - barY;
+    const bar = el('rect', { x: cx - barW/2, y: barY, width: barW, height: barH, rx: 4, class: 'bar' });
+    svg.appendChild(bar);
+    const label = el('text', { x: cx, y: barY - 10, class: 'bar-label', 'text-anchor': 'middle' });
+    label.textContent = '$' + d.val + 'B'; svg.appendChild(label);
+    const yearLabel = el('text', { x: cx, y: H - marginBottom + 20, class: 'year-label', 'text-anchor': 'middle' });
+    yearLabel.textContent = d.year; svg.appendChild(yearLabel);
+    const hit = el('rect', { x: cx - bandW/2, y: marginTop, width: bandW, height: plotH, class: 'bar-hit' });
+    hit.addEventListener('mouseenter', () => showTooltip(d, cx, barY));
+    hit.addEventListener('mousemove', () => positionTooltip(cx, barY));
+    hit.addEventListener('mouseleave', hideTooltip);
+    svg.appendChild(hit);
+  });
+  function showTooltip(d, cx, cy) {
+    tooltip.innerHTML = `<div class="tooltip-year">${d.year}</div><div class="tooltip-val">$${d.val}B 累计净利润</div><div>${d.note}</div><div class="tooltip-src">来源：<a href="${d.link}" target="_blank" style="color:inherit;">${d.src}</a></div>`;
+    positionTooltip(cx, cy); tooltip.style.opacity = 1;
+  }
+  function positionTooltip(cx, cy) {
+    const scaleX = chartWrap.clientWidth / W;
+    let left = cx * scaleX - 130, top = Math.max(cy * scaleX - 100, 0);
+    left = Math.max(8, Math.min(left, chartWrap.clientWidth - 296));
+    tooltip.style.left = left + 'px'; tooltip.style.top = top + 'px';
+  }
+  function hideTooltip() { tooltip.style.opacity = 0; }
+})();
+</script>
+</body>
+</html>
