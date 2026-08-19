@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BAM 公司整体历年收益率</title>
+<style>
+  .viz-root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --page-plane:     #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --gridline:       #e1e0d9;
+    --baseline:       #c3c2b7;
+    --series-1:       #2a78d6;
+    --series-1-low:   #9ec5f4;
+    --critical:       #d03b3b;
+    --fund-level:     #8a6fbd;
+    --border:         rgba(11,11,11,0.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) .viz-root {
+      color-scheme: dark;
+      --surface-1: #1a1a19; --page-plane: #0d0d0d; --text-primary: #ffffff;
+      --text-secondary: #c3c2b7; --text-muted: #898781; --gridline: #2c2c2a;
+      --baseline: #383835; --series-1: #3987e5; --series-1-low: #184f95; --critical: #e66767; --fund-level: #a68fd6; --border: rgba(255,255,255,0.10);
+    }
+  }
+  :root[data-theme="dark"] .viz-root {
+    color-scheme: dark;
+    --surface-1: #1a1a19; --page-plane: #0d0d0d; --text-primary: #ffffff;
+    --text-secondary: #c3c2b7; --text-muted: #898781; --gridline: #2c2c2a;
+    --baseline: #383835; --series-1: #3987e5; --series-1-low: #184f95; --critical: #e66767; --fund-level: #a68fd6; --border: rgba(255,255,255,0.10);
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:32px 16px; background:var(--page-plane); font-family: system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; display:flex; justify-content:center; }
+  .card { width:100%; max-width:860px; background:var(--surface-1); border:1px solid var(--border); border-radius:12px; padding:28px 28px 20px; }
+  .title { font-size:18px; font-weight:600; color:var(--text-primary); margin:0 0 4px; }
+  .subtitle { font-size:13px; color:var(--text-secondary); margin:0 0 8px; line-height:1.5; }
+  .warn-box { background:rgba(208,59,59,0.06); border:1px solid rgba(208,59,59,0.25); border-radius:8px; padding:10px 14px; font-size:12.5px; color:var(--text-secondary); line-height:1.6; margin-bottom:16px; }
+  .warn-box b { color:var(--text-primary); }
+  .toolbar { display:flex; justify-content:flex-end; gap:8px; margin-bottom:8px; }
+  .toggle-btn { font-size:12px; color:var(--text-secondary); background:transparent; border:1px solid var(--border); border-radius:6px; padding:5px 10px; cursor:pointer; font-family:inherit; }
+  .toggle-btn:hover { color:var(--text-primary); border-color:var(--text-secondary); }
+  svg { display:block; overflow:visible; }
+  .gridline { stroke:var(--gridline); stroke-width:1; }
+  .baseline { stroke:var(--baseline); stroke-width:1; }
+  .axis-label { fill:var(--text-muted); font-size:11px; }
+  .bar-hit { fill:transparent; cursor:pointer; }
+  .bar-label { fill:var(--text-primary); font-size:12px; font-weight:600; font-variant-numeric:tabular-nums; }
+  .year-label { fill:var(--text-secondary); font-size:11px; }
+  .tooltip { position:absolute; pointer-events:none; background:var(--surface-1); border:1px solid var(--border); border-radius:8px; padding:8px 12px; font-size:12px; color:var(--text-primary); box-shadow:0 4px 16px rgba(0,0,0,0.12); opacity:0; transition:opacity 0.1s ease; max-width:300px; line-height:1.5; z-index:10; }
+  .tooltip-year { font-weight:600; margin-bottom:2px; }
+  .tooltip-val { font-weight:600; }
+  .tooltip-src { color:var(--text-muted); font-size:11px; margin-top:2px; }
+  .legend-note { display:flex; flex-wrap:wrap; align-items:center; gap:10px; font-size:11px; color:var(--text-muted); margin-top:14px; }
+  .legend-swatch { width:10px; height:10px; border-radius:2px; display:inline-block; }
+  table.data-table { width:100%; border-collapse:collapse; font-size:12px; margin-top:8px; }
+  table.data-table th, table.data-table td { text-align:left; padding:7px 8px; border-bottom:1px solid var(--gridline); color:var(--text-secondary); }
+  table.data-table th { color:var(--text-muted); font-weight:500; font-size:11px; }
+  table.data-table a { color:var(--text-secondary); }
+  .hidden { display:none; }
+  .footnote { font-size:11px; color:var(--text-muted); margin-top:16px; line-height:1.7; border-top:1px solid var(--gridline); padding-top:12px; }
+  .footnote a { color:var(--text-muted); }
+</style>
+</head>
+<body>
+<div class="viz-root">
+  <div class="card">
+    <p class="title">Balyasny Asset Management（BAM）公司整体历年收益率</p>
+    <p class="subtitle">按自然年计，%，公司整体口径（非Atlas Diversified等单只基金专属数据）。年份之间存在数据空白，不代表收益为零。悬停/查看数据表可看逐条来源与置信度说明。</p>
+    <div class="warn-box">
+      <b>2018年数据归属提醒：</b>媒体报道普遍把"-7%"作为BAM 2018年危机年份的代表性数字，但Institutional Investor原文在多处语境下实际指向的是"Atlas Enhanced"这只具体基金，而非确认无误的公司整体口径——本图仍按行业惯例将其展示为公司层面参考值，但用低置信度样式标注，并在此处明确提示这一归属不确定性。
+    </div>
+    <div class="warn-box" style="background:rgba(42,120,214,0.06); border-color:rgba(42,120,214,0.25);">
+      <b>补充检索说明：</b>2008年危机年份，三处独立报道（Institutional Investor两篇 + Ritholtz播客访谈）都只给出定性描述"基本持平/小幅盈利"（"virtually flat"、"we made money"、口头提及约"50个基点"），没有任何一处给出可用于作图的精确百分比，故2008年不作为图中数据点，仅在此说明；2017年也只查到截至9月的YTD数字（Atlas Global +2.16%、Atlas Enhanced +3.78%），非全年数字且归属为具体基金而非公司整体，同样未纳入图表。补充检索还找到2013年（Atlas Global +12.94%）、2016年（Atlas Global -1.33%）两个数字，但原文明确标注为"Atlas Global"这只旗舰基金的收益率，不是BAM公司整体口径，为保持本表口径一致性（只呈现公司整体数字），已不再纳入图中。
+    </div>
+    <div class="toolbar"><button class="toggle-btn" id="viewToggle">查看数据表</button></div>
+    <div id="chartWrap" style="position:relative;">
+      <svg id="chart" viewBox="0 0 780 320" width="100%" height="320" role="img" aria-label="BAM公司整体历年收益率柱状图"></svg>
+      <div class="tooltip" id="tooltip"></div>
+    </div>
+    <div class="legend-note">
+      <span class="legend-swatch" style="background:var(--series-1);"></span><span>正收益（较可靠来源）</span>
+      <span class="legend-swatch" style="background:var(--series-1-low);"></span><span>正收益（归属存疑/单一来源）</span>
+      <span class="legend-swatch" style="background:var(--critical);"></span><span>负收益</span>
+    </div>
+    <div id="tableWrap" class="hidden"><table class="data-table" id="dataTable"></table></div>
+    <div class="footnote">
+      数据来源：Institutional Investor《The Curious Case of Dmitry Balyasny》<a href="https://www.institutionalinvestor.com/article/2bsx0lugchiqbwsazyvpc/corner-office/the-curious-case-of-dmitry-balyasny" target="_blank">↗</a>（2001-2017年16年年化约12%；2018年-7%，归属存疑）；Institutional Investor《Hedge Funds Have a Reputation for Ruthlessness...》<a href="https://www.institutionalinvestor.com/article/hedge-funds-have-reputation-ruthlessness-dmitry-balyasny-took-different-approach" target="_blank">↗</a>（2022年+11.2%净收益，公司整体口径确认）；funanc1al.com<a href="https://funanc1al.com/blogs/follow-the-pundits/balyasny-asset-management-s-2025-scorecard-solid-performance-serious-machine" target="_blank">↗</a>（2025年全年+16.7%）。检索时间2026年8月，具体数字可能已变化。2001-2017年为16年区间年化平均值，非单一年份数字，图中以起止年份标注呈现；经补充检索确认，2001-2017年间不存在可核实的逐年（year-by-year）公司整体口径完整数据序列，无法改为逐年折线图（曾找到2013年Atlas Global+12.94%、2016年Atlas Global-1.33%两个孤立数字，但均为基金专属而非公司整体口径，为保持本表口径一致性未纳入）。
+    </div>
+  </div>
+</div>
+<script>
+(function() {
+  const data = [
+    { year: "2001-2017\n(16年年化)", val: 12, note: "\"annualized return of 12 percent\"，覆盖公司成立后前16年的区间年化平均值，非单一年份数字", src: "Institutional Investor", link: "https://www.institutionalinvestor.com/article/2bsx0lugchiqbwsazyvpc/corner-office/the-curious-case-of-dmitry-balyasny", conf: "high", entity: "company" },
+    { year: "2018", val: -7, note: "危机年份：股票敞口过度集中（约占风险资本85%）叠加行情不利，触发公司此后向五大策略线的多元化改革；数字归属公司整体还是Atlas Enhanced基金存在不确定性", src: "Institutional Investor", link: "https://www.institutionalinvestor.com/article/2bsx0lugchiqbwsazyvpc/corner-office/the-curious-case-of-dmitry-balyasny", conf: "low", entity: "company" },
+    { year: "2022", val: 11.2, note: "净收益，公司整体口径，市场大跌年份体现低beta防御性", src: "Institutional Investor", link: "https://www.institutionalinvestor.com/article/hedge-funds-have-reputation-ruthlessness-dmitry-balyasny-took-different-approach", conf: "high", entity: "company" },
+    { year: "2025", val: 16.7, note: "全年收益率，与标普500（约16-18%）、Point72（约17.5%）、D.E. Shaw（约18.5%）同期对比", src: "funanc1al.com", link: "https://funanc1al.com/blogs/follow-the-pundits/balyasny-asset-management-s-2025-scorecard-solid-performance-serious-machine", conf: "low", entity: "company" }
+  ];
+  const svg = document.getElementById('chart');
+  const NS = "http://www.w3.org/2000/svg";
+  const W = 780, H = 320;
+  const marginLeft = 50, marginRight = 40, marginTop = 20, marginBottom = 52;
+  const plotW = W - marginLeft - marginRight, plotH = H - marginTop - marginBottom;
+  const yMin = -20, yMax = 30;
+  function yScale(v) { return marginTop + plotH - ((v - yMin) / (yMax - yMin)) * plotH; }
+  const n = data.length, bandW = plotW / n, barW = Math.min(120, bandW * 0.42);
+  function el(tag, attrs) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; }
+  [-20,-10,0,10,20,30].forEach(t => {
+    const y = yScale(t);
+    svg.appendChild(el('line', { x1: marginLeft, x2: W - marginRight, y1: y, y2: y, class: t === 0 ? 'baseline' : 'gridline' }));
+    const label = el('text', { x: marginLeft - 8, y: y + 4, class: 'axis-label', 'text-anchor': 'end' });
+    label.textContent = t + '%'; svg.appendChild(label);
+  });
+  const tooltip = document.getElementById('tooltip'), chartWrap = document.getElementById('chartWrap');
+  data.forEach((d, i) => {
+    const cx = marginLeft + bandW * i + bandW / 2;
+    const zeroY = yScale(0), valY = yScale(d.val);
+    const barY = Math.min(zeroY, valY), barH = Math.abs(zeroY - valY);
+    const color = d.entity === 'fund' ? 'var(--fund-level)' : (d.val < 0 ? 'var(--critical)' : (d.conf === 'low' ? 'var(--series-1-low)' : 'var(--series-1)'));
+    const bar = el('rect', { x: cx - barW/2, y: barY, width: barW, height: Math.max(barH,2), rx: 4, fill: color });
+    svg.appendChild(bar);
+    const labelY = d.val < 0 ? barY + barH + 16 : barY - 10;
+    const label = el('text', { x: cx, y: labelY, class: 'bar-label', 'text-anchor': 'middle' });
+    label.textContent = (d.val > 0 ? '+' : '') + d.val + '%'; svg.appendChild(label);
+    const yearLines = d.year.split('\n');
+    yearLines.forEach((line, li) => {
+      const yearLabel = el('text', { x: cx, y: H - marginBottom + 20 + li*13, class: 'year-label', 'text-anchor': 'middle' });
+      yearLabel.textContent = line; svg.appendChild(yearLabel);
+    });
+    const hit = el('rect', { x: cx - bandW/2, y: marginTop, width: bandW, height: plotH, class: 'bar-hit' });
+    hit.addEventListener('mouseenter', () => showTooltip(d, cx, barY));
+    hit.addEventListener('mousemove', () => positionTooltip(cx, barY));
+    hit.addEventListener('mouseleave', hideTooltip);
+    svg.appendChild(hit);
+  });
+  function showTooltip(d, cx, cy) {
+    tooltip.innerHTML = `<div class="tooltip-year">${d.year.replace('\n',' ')}</div><div class="tooltip-val">${(d.val>0?'+':'')+d.val}%</div><div>${d.note}</div><div class="tooltip-src">来源：<a href="${d.link}" target="_blank" style="color:inherit;">${d.src}</a></div>`;
+    positionTooltip(cx, cy); tooltip.style.opacity = 1;
+  }
+  function positionTooltip(cx, cy) {
+    const scaleX = chartWrap.clientWidth / W;
+    let left = cx * scaleX - 130, top = Math.max(cy * scaleX - 100, 0);
+    left = Math.max(8, Math.min(left, chartWrap.clientWidth - 306));
+    tooltip.style.left = left + 'px'; tooltip.style.top = top + 'px';
+  }
+  function hideTooltip() { tooltip.style.opacity = 0; }
+  const table = document.getElementById('dataTable');
+  let thead = '<tr><th>年份</th><th>收益率</th><th>说明</th><th>来源</th></tr>';
+  let rows = data.map(d => `<tr><td>${d.year.replace('\n',' ')}</td><td>${(d.val>0?'+':'')+d.val}%</td><td>${d.note}</td><td><a href="${d.link}" target="_blank">${d.src}</a></td></tr>`).join('');
+  table.innerHTML = thead + rows;
+  const toggleBtn = document.getElementById('viewToggle');
+  const tableWrap = document.getElementById('tableWrap');
+  let showingTable = false;
+  toggleBtn.addEventListener('click', () => {
+    showingTable = !showingTable;
+    tableWrap.classList.toggle('hidden', !showingTable);
+    chartWrap.classList.toggle('hidden', showingTable);
+    document.querySelector('.legend-note').classList.toggle('hidden', showingTable);
+    toggleBtn.textContent = showingTable ? '查看图表' : '查看数据表';
+  });
+})();
+</script>
+</body>
+</html>

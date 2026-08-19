@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balyasny Asset Management（BAM）公司整体AUM历史变化（2001-2026）</title>
+<style>
+  .viz-root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --page-plane:     #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --gridline:       #e1e0d9;
+    --baseline:       #c3c2b7;
+    --series-1:       #2a78d6;
+    --series-1-low:   #9ec5f4;
+    --border:         rgba(11,11,11,0.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) .viz-root {
+      color-scheme: dark;
+      --surface-1: #1a1a19; --page-plane: #0d0d0d; --text-primary: #ffffff;
+      --text-secondary: #c3c2b7; --text-muted: #898781; --gridline: #2c2c2a;
+      --baseline: #383835; --series-1: #3987e5; --series-1-low: #184f95; --border: rgba(255,255,255,0.10);
+    }
+  }
+  :root[data-theme="dark"] .viz-root {
+    color-scheme: dark;
+    --surface-1: #1a1a19; --page-plane: #0d0d0d; --text-primary: #ffffff;
+    --text-secondary: #c3c2b7; --text-muted: #898781; --gridline: #2c2c2a;
+    --baseline: #383835; --series-1: #3987e5; --series-1-low: #184f95; --border: rgba(255,255,255,0.10);
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:32px 16px; background:var(--page-plane); font-family: system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; display:flex; justify-content:center; }
+  .card { width:100%; max-width:940px; background:var(--surface-1); border:1px solid var(--border); border-radius:12px; padding:28px 28px 20px; }
+  .title { font-size:18px; font-weight:600; color:var(--text-primary); margin:0 0 4px; }
+  .subtitle { font-size:13px; color:var(--text-secondary); margin:0 0 8px; line-height:1.5; }
+  .warn-box { background:rgba(208,59,59,0.06); border:1px solid rgba(208,59,59,0.25); border-radius:8px; padding:10px 14px; font-size:12.5px; color:var(--text-secondary); line-height:1.6; margin-bottom:16px; }
+  .warn-box b { color:var(--text-primary); }
+  .toolbar { display:flex; justify-content:flex-end; gap:8px; margin-bottom:8px; }
+  .toggle-btn { font-size:12px; color:var(--text-secondary); background:transparent; border:1px solid var(--border); border-radius:6px; padding:5px 10px; cursor:pointer; font-family:inherit; }
+  .toggle-btn:hover { color:var(--text-primary); border-color:var(--text-secondary); }
+  svg { display:block; overflow:visible; }
+  .gridline { stroke:var(--gridline); stroke-width:1; }
+  .baseline { stroke:var(--baseline); stroke-width:1; }
+  .axis-label { fill:var(--text-muted); font-size:11px; }
+  .line-path { fill:none; stroke:var(--series-1); stroke-width:2; stroke-linejoin:round; stroke-linecap:round; }
+  .area-fill { fill:var(--series-1); opacity:0.08; }
+  .pt { stroke:var(--surface-1); stroke-width:2; }
+  .pt.high { fill:var(--series-1); }
+  .pt.low { fill:var(--series-1-low); }
+  .pt-hit { fill:transparent; cursor:pointer; }
+  .point-label { fill:var(--text-primary); font-size:11px; font-weight:600; font-variant-numeric:tabular-nums; }
+  .point-label.low-conf { fill:var(--text-secondary); font-weight:500; }
+  .year-label { fill:var(--text-secondary); font-size:10.5px; }
+  .tooltip { position:absolute; pointer-events:none; background:var(--surface-1); border:1px solid var(--border); border-radius:8px; padding:8px 12px; font-size:12px; color:var(--text-primary); box-shadow:0 4px 16px rgba(0,0,0,0.12); opacity:0; transition:opacity 0.1s ease; max-width:290px; line-height:1.5; z-index:10; }
+  .tooltip-year { font-weight:600; margin-bottom:2px; }
+  .tooltip-val { font-weight:600; }
+  .tooltip-src { color:var(--text-muted); font-size:11px; margin-top:2px; }
+  .legend-note { display:flex; flex-wrap:wrap; align-items:center; gap:6px; font-size:11px; color:var(--text-muted); margin-top:14px; }
+  .legend-swatch { width:10px; height:10px; border-radius:50%; display:inline-block; }
+  .legend-swatch.high { background:var(--series-1); }
+  .legend-swatch.low { background:var(--series-1-low); }
+  .footnote { font-size:11px; color:var(--text-muted); margin-top:16px; line-height:1.7; border-top:1px solid var(--gridline); padding-top:12px; }
+  .footnote a { color:var(--text-muted); }
+  table.data-table { width:100%; border-collapse:collapse; font-size:12px; margin-top:8px; }
+  table.data-table th, table.data-table td { text-align:left; padding:7px 8px; border-bottom:1px solid var(--gridline); color:var(--text-secondary); }
+  table.data-table th { color:var(--text-muted); font-weight:500; font-size:11px; }
+  table.data-table td:first-child, table.data-table td:nth-child(2) { color:var(--text-primary); font-variant-numeric:tabular-nums; }
+  table.data-table a { color:var(--text-secondary); }
+  .hidden { display:none; }
+</style>
+</head>
+<body>
+<div class="viz-root">
+  <div class="card">
+    <p class="title">Balyasny Asset Management（BAM）公司整体AUM历史变化（2001-2026）</p>
+    <p class="subtitle">单位：十亿美元。按媒体/官方文件披露的"客户资产"（client assets）口径统计，公司整体层面，不含Atlas Diversified等单只基金专属数据。经补充检索，已找到2008、2010、2011、2015年的具体数字，但2001-2007年（除2001年起始资本外）、2009年、2012-2013年、2016年仍未查到可靠、具体年份的数字披露（曾查到Grokipedia提及"2010年约20亿增长至2015年约70亿"，与本表2010年$18亿、2015年$126亿两个一手数据明显矛盾，判定为AI生成内容不可信，未采纳）。悬停/查看数据表可看逐条来源。</p>
+    <div class="warn-box">
+      <b>口径提醒：</b>BAM在SEC Form ADV中披露的"regulatory AUM"（监管口径管理规模）是另一套完全不同、数值大得多的指标——截至2026年6月30日达2481亿美元，另有"Private Fund GAV"（私募基金名义总资产）2774亿美元「<a href="https://www.9at.com/Adviser/801-66002" target="_blank" style="color:inherit;">9AT.com</a>」，这类监管口径通常包含杠杆敞口、且在母基金/子基金结构下可能重复计算，与本图使用的"客户资产"口径（更接近实际净值）不是同一个量级，不可混用比较。
+    </div>
+    <div class="toolbar"><button class="toggle-btn" id="viewToggle">查看数据表</button></div>
+    <div id="chartWrap" style="position:relative;">
+      <svg id="chart" viewBox="0 0 900 360" width="100%" height="360" role="img" aria-label="BAM公司整体AUM历史变化折线图"></svg>
+      <div class="tooltip" id="tooltip"></div>
+    </div>
+    <div class="legend-note">
+      <span class="legend-swatch high"></span><span>两个及以上信源交叉印证</span>
+      <span class="legend-swatch low"></span><span>单一信源，置信度较低</span>
+    </div>
+    <div id="tableWrap" class="hidden"><table class="data-table" id="dataTable"></table></div>
+    <div class="footnote">
+      数据来源：Institutional Investor《Hedge Funds Have a Reputation for Ruthlessness...》<a href="https://www.institutionalinvestor.com/article/hedge-funds-have-reputation-ruthlessness-dmitry-balyasny-took-different-approach" target="_blank">↗</a> / Ritholtz《The Big Picture》Balyasny访谈实录<a href="https://ritholtz.com/2025/09/transcript-dmitry-balyasny/" target="_blank">↗</a>（2001年创立，$4000万起始资本）；Bloomberg，经博客转引<a href="http://richard-wilson.blogspot.com/2008/08/balyasny-asset-management-lp-barry.html" target="_blank">↗</a>（2008年8月，$25亿，危机中逆势扩张）；Dow Jones/WSJ经Chicago Tribune转载<a href="http://archive.chicagobreakingbusiness.com/2010/11/chicago-hedge-fund-balyasny-being-examined-in-probe.html" target="_blank">↗</a>（2010年年中，$18亿）；Institutional Investor《Balyasny Asset Management Returns to Macro》<a href="http://www.institutionalinvestor.com/article/2800953/balyasny-asset-management-returns-to-macro.html" target="_blank">↗</a>（2011年4月，$20亿）；Institutional Investor《Hedge Fund 100》榜单<a href="https://www.institutionalinvestor.com/article/2bsut5uz58ukfu8cdbfgg/premium/balyasny-asset-management" target="_blank">↗</a>（2015年5月，$126亿，一手榜单数字；2014年初约$96亿为同篇文章反推得出，非直接披露）；Insider Monkey经Yahoo Finance转引<a href="https://finance.yahoo.com/news/balyasny-asset-management-latest-moves-041149227.html" target="_blank">↗</a>（2017年3月，$127亿，危机前历史峰值）；Institutional Investor《The Curious Case of Dmitry Balyasny》<a href="https://www.institutionalinvestor.com/article/2bsx0lugchiqbwsazyvpc/corner-office/the-curious-case-of-dmitry-balyasny" target="_blank">↗</a>（2018年初）；Institutional Investor《Hedge Fund Balyasny Cuts Staff by 20 Percent》<a href="https://www.institutionalinvestor.com/article/b1c3kcs9zw36sn/Hedge-Fund-Balyasny-Cuts-Staff-by-20-Percent" target="_blank">↗</a>（2019年初预期）；BAM Form ADV Part 2A brochure，经9AT.com整理<a href="https://www.9at.com/Adviser/801-66002" target="_blank">↗</a>（2024年3月，"BAM managed approximately $21,357,000,000 in client assets on a discretionary basis"，一手监管文件数字，置信度最高）；navnoorbawa.substack.com<a href="https://navnoorbawa.substack.com/p/how-multi-strategy-funds-generated" target="_blank">↗</a>（2025年9月）；HedgeCo Insights<a href="https://hedgeco.net/news/11/2025/balyasny-asset-management-delivers-above-average-october-returns-ytd-up-12-5.html" target="_blank">↗</a>（2025年11月）；Hedgeweek<a href="https://www.hedgeweek.com/balyasny-up-more-than-15-this-year/" target="_blank">↗</a>（2025年12月，"The $31bn multi-strategy manager"）；HedgeCo Insights<a href="https://hedgeco.net/news/05/2026/balyasnys-recovery-path-why-bams-april-rebound-matters-for-the-multi-strategy-hedge-fund-race.html" target="_blank">↗</a>（2026年5月）。检索时间2026年8月，具体数字可能已变化。2008年数字为博客对Bloomberg原报道的转引，未能直接核对Bloomberg原文；2001-2007年（除起始资本外）、2009年、2012-2013年、2016年经多轮检索仍未找到可靠披露，为结构性数据空白。
+    </div>
+  </div>
+</div>
+<script>
+(function() {
+  const data = [
+    { year: "2001", aum: 0.04, label: "$4000万", note: "创立初始资本，非AUM意义上的管理规模，仅作历史起点参考。Institutional Investor另一篇报道中Schroeder回忆为\"$20 million\"，两个数字存在差异，推测后者可能指创始人自有出资部分而非总起始资本", src: "Institutional Investor / Ritholtz访谈", link: "https://www.institutionalinvestor.com/article/hedge-funds-have-reputation-ruthlessness-dmitry-balyasny-took-different-approach", conf: "low" },
+    { year: "2008-08", aum: 2.5, label: "$25亿", note: "金融危机期间原文引用副董事长Barry Colvin：\"in a year like this, there are a lot more candidates out there,\" said Barry Colvin, vice chairman of the Chicago-based firm, which oversees $2.5 billion——危机中逆势招聘扩张，而非收缩/gate。原始Bloomberg报道链接已失效，本数字来自博客对Bloomberg报道的转引，未能直接核对Bloomberg原文，标记为二手转引", src: "Bloomberg（经博客转引）", link: "http://richard-wilson.blogspot.com/2008/08/balyasny-asset-management-lp-barry.html", conf: "low" },
+    { year: "2010中", aum: 1.8, label: "$18亿", note: "\"Balyasny, which reported $1.8 billion in assets under management at midyear, didn't respond to requests for comment.\"——内幕交易调查报道中提及，与2011年4月$20亿数字量级吻合，可互相印证", src: "Dow Jones/WSJ（经Chicago Tribune转载）", link: "http://archive.chicagobreakingbusiness.com/2010/11/chicago-hedge-fund-balyasny-being-examined-in-probe.html", conf: "low" },
+    { year: "2011-04", aum: 2.0, label: "$20亿", note: "\"The $2 billion multistrategy hedge fund firm, which specializes in long-short equity investing, started doing global macro almost a decade ago.\"", src: "Institutional Investor", link: "http://www.institutionalinvestor.com/article/2800953/balyasny-asset-management-returns-to-macro.html", conf: "low" },
+    { year: "2014初(推算)", aum: 9.6, label: "约$96亿", note: "非直接披露数字，由2015年5月同篇文章内\"the firm's capital base has expanded by about $3 billion since then\"反推（$126亿−$30亿≈$96亿），仅供参考，不作为独立核实数据点", src: "Institutional Investor（推算）", link: "https://www.institutionalinvestor.com/article/2bsut5uz58ukfu8cdbfgg/premium/balyasny-asset-management", conf: "low" },
+    { year: "2015-05", aum: 12.6, label: "$126亿", note: "Institutional Investor《Hedge Fund 100》榜单原文：\"48. Balyasny Asset Management / $12.6 billion\"", src: "Institutional Investor（Hedge Fund 100）", link: "https://www.institutionalinvestor.com/article/2bsut5uz58ukfu8cdbfgg/premium/balyasny-asset-management", conf: "low" },
+    { year: "2017-03", aum: 12.7, label: "$127亿", note: "\"It had around $12.7 billion in assets under management in March 2017.\"——这是2018年危机前的历史峰值，Institutional Investor另文笼统提及\"assets swelled to $12 billion\"，与本数字基本吻合，可互相印证", src: "Insider Monkey / Yahoo Finance", link: "https://finance.yahoo.com/news/balyasny-asset-management-latest-moves-041149227.html", conf: "high" },
+    { year: "2018初", aum: 11.3, label: "$113亿", note: "", src: "Institutional Investor", link: "https://www.institutionalinvestor.com/article/2bsx0lugchiqbwsazyvpc/corner-office/the-curious-case-of-dmitry-balyasny", conf: "low" },
+    { year: "2019初(预期)", aum: 7.3, label: "$73亿", note: "2018年危机+裁员20%后，公司预期2019年初规模降至约73亿美元", src: "Institutional Investor", link: "https://www.institutionalinvestor.com/article/b1c3kcs9zw36sn/Hedge-Fund-Balyasny-Cuts-Staff-by-20-Percent", conf: "low" },
+    { year: "2024-03", aum: 21.357, label: "$213.6亿", note: "Form ADV Part 2A原文：\"BAM managed approximately $21,357,000,000 in client assets on a discretionary basis\"，一手监管文件数字", src: "BAM Form ADV（经9AT.com整理）", link: "https://www.9at.com/Adviser/801-66002", conf: "high" },
+    { year: "2025-09", aum: 28, label: "$280亿", note: "", src: "navnoorbawa.substack.com", link: "https://navnoorbawa.substack.com/p/how-multi-strategy-funds-generated", conf: "low" },
+    { year: "2025-11", aum: 29.5, label: "$295亿左右", note: "", src: "HedgeCo Insights", link: "https://hedgeco.net/news/11/2025/balyasny-asset-management-delivers-above-average-october-returns-ytd-up-12-5.html", conf: "low" },
+    { year: "2025-12", aum: 31, label: "$310亿", note: "\"The $31bn multi-strategy manager has been ahead of many of its competitors through the first 10 months of the year\"", src: "Hedgeweek", link: "https://www.hedgeweek.com/balyasny-up-more-than-15-this-year/", conf: "low" },
+    { year: "2026-05", aum: 36, label: "$360亿", note: "", src: "HedgeCo Insights", link: "https://hedgeco.net/news/05/2026/balyasnys-recovery-path-why-bams-april-rebound-matters-for-the-multi-strategy-hedge-fund-race.html", conf: "low" }
+  ];
+  const svg = document.getElementById('chart');
+  const NS = "http://www.w3.org/2000/svg";
+  const W = 900, H = 360;
+  const marginLeft = 46, marginRight = 24, marginTop = 24, marginBottom = 40;
+  const plotW = W - marginLeft - marginRight, plotH = H - marginTop - marginBottom;
+  const n = data.length;
+  const xStep = plotW / (n - 1);
+  function xScale(i) { return marginLeft + xStep * i; }
+  const yMax = 40;
+  function yScale(v) { return marginTop + plotH - (v / yMax) * plotH; }
+  function el(tag, attrs) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; }
+  [0,10,20,30,40].forEach(t => {
+    const y = yScale(t);
+    svg.appendChild(el('line', { x1: marginLeft, x2: W - marginRight, y1: y, y2: y, class: t === 0 ? 'baseline' : 'gridline' }));
+    const label = el('text', { x: marginLeft - 8, y: y + 4, class: 'axis-label', 'text-anchor': 'end' });
+    label.textContent = '$' + t + 'B'; svg.appendChild(label);
+  });
+  let pathD = "", areaD = "";
+  data.forEach((d, i) => {
+    const x = xScale(i), y = yScale(d.aum);
+    pathD += (i === 0 ? "M" : "L") + x + "," + y + " ";
+    areaD += (i === 0 ? "M" : "L") + x + "," + y + " ";
+  });
+  areaD += "L" + xScale(n - 1) + "," + yScale(0) + " L" + xScale(0) + "," + yScale(0) + " Z";
+  svg.appendChild(el('path', { d: areaD, class: 'area-fill' }));
+  svg.appendChild(el('path', { d: pathD, class: 'line-path' }));
+  const tooltip = document.getElementById('tooltip'), chartWrap = document.getElementById('chartWrap');
+  data.forEach((d, i) => {
+    const x = xScale(i), y = yScale(d.aum);
+    const cls = d.conf === 'high' ? 'pt high' : 'pt low';
+    const pt = el('circle', { cx: x, cy: y, r: d.conf === 'high' ? 5 : 4, class: cls });
+    svg.appendChild(pt);
+    const ldy = (i % 2 === 0) ? -14 : -24;
+    const label = el('text', { x: x, y: y + ldy, class: 'point-label' + (d.conf === 'low' ? ' low-conf' : ''), 'text-anchor': 'middle' });
+    label.textContent = d.label; svg.appendChild(label);
+    const yearLabel = el('text', { x: x, y: H - marginBottom + 18, class: 'year-label', 'text-anchor': 'middle' });
+    yearLabel.textContent = d.year; svg.appendChild(yearLabel);
+    const hit = el('circle', { cx: x, cy: y, r: 13, class: 'pt-hit' });
+    hit.addEventListener('mouseenter', () => showTooltip(d, x, y));
+    hit.addEventListener('mousemove', () => positionTooltip(x, y));
+    hit.addEventListener('mouseleave', hideTooltip);
+    svg.appendChild(hit);
+  });
+  function showTooltip(d, cx, cy) {
+    tooltip.innerHTML = `<div class="tooltip-year">${d.year}</div><div class="tooltip-val">${d.label}</div>` + (d.note ? `<div>${d.note}</div>` : '') + `<div class="tooltip-src">来源：<a href="${d.link}" target="_blank" style="color:inherit;">${d.src}</a></div>`;
+    positionTooltip(cx, cy); tooltip.style.opacity = 1;
+  }
+  function positionTooltip(cx, cy) {
+    const scaleX = chartWrap.clientWidth / W;
+    let left = cx * scaleX - 120, top = Math.max(cy * scaleX - 100, 0);
+    left = Math.max(8, Math.min(left, chartWrap.clientWidth - 298));
+    tooltip.style.left = left + 'px'; tooltip.style.top = top + 'px';
+  }
+  function hideTooltip() { tooltip.style.opacity = 0; }
+  const table = document.getElementById('dataTable');
+  let thead = '<tr><th>时间</th><th>AUM</th><th>说明</th><th>来源</th></tr>';
+  let rows = data.map(d => `<tr><td>${d.year}</td><td>${d.label}</td><td>${d.note || '—'}</td><td><a href="${d.link}" target="_blank">${d.src}</a></td></tr>`).join('');
+  table.innerHTML = thead + rows;
+  const toggleBtn = document.getElementById('viewToggle');
+  const tableWrap = document.getElementById('tableWrap');
+  let showingTable = false;
+  toggleBtn.addEventListener('click', () => {
+    showingTable = !showingTable;
+    tableWrap.classList.toggle('hidden', !showingTable);
+    chartWrap.classList.toggle('hidden', showingTable);
+    document.querySelector('.legend-note').classList.toggle('hidden', showingTable);
+    toggleBtn.textContent = showingTable ? '查看图表' : '查看数据表';
+  });
+})();
+</script>
+</body>
+</html>

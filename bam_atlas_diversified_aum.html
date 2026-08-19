@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas Diversified Master Fund, Ltd. 管理规模（GAV）</title>
+<style>
+  .viz-root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --page-plane:     #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --gridline:       #e1e0d9;
+    --series-1:       #2a78d6;
+    --border:         rgba(11,11,11,0.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) .viz-root {
+      color-scheme: dark;
+      --surface-1: #1a1a19; --page-plane: #0d0d0d; --text-primary: #ffffff;
+      --text-secondary: #c3c2b7; --text-muted: #898781; --gridline: #2c2c2a; --series-1: #3987e5; --border: rgba(255,255,255,0.10);
+    }
+  }
+  :root[data-theme="dark"] .viz-root {
+    color-scheme: dark;
+    --surface-1: #1a1a19; --page-plane: #0d0d0d; --text-primary: #ffffff;
+    --text-secondary: #c3c2b7; --text-muted: #898781; --gridline: #2c2c2a; --series-1: #3987e5; --border: rgba(255,255,255,0.10);
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:32px 16px; background:var(--page-plane); font-family: system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; display:flex; justify-content:center; }
+  .card { width:100%; max-width:760px; background:var(--surface-1); border:1px solid var(--border); border-radius:12px; padding:28px 28px 20px; }
+  .title { font-size:18px; font-weight:600; color:var(--text-primary); margin:0 0 4px; }
+  .subtitle { font-size:13px; color:var(--text-secondary); margin:0 0 8px; line-height:1.5; }
+  .warn-box { background:rgba(208,59,59,0.06); border:1px solid rgba(208,59,59,0.25); border-radius:8px; padding:10px 14px; font-size:12.5px; color:var(--text-secondary); line-height:1.6; margin-bottom:18px; }
+  .warn-box b { color:var(--text-primary); }
+  table.data-table { width:100%; border-collapse:collapse; font-size:13px; }
+  table.data-table th, table.data-table td { text-align:left; padding:10px 10px; border-bottom:1px solid var(--gridline); color:var(--text-secondary); }
+  table.data-table th { color:var(--text-muted); font-weight:500; font-size:11.5px; }
+  table.data-table td:first-child, table.data-table td:nth-child(2) { color:var(--text-primary); font-weight:600; font-variant-numeric:tabular-nums; }
+  table.data-table a { color:var(--text-secondary); }
+  .footnote { font-size:11px; color:var(--text-muted); margin-top:16px; line-height:1.7; border-top:1px solid var(--gridline); padding-top:12px; }
+  .footnote a { color:var(--text-muted); }
+</style>
+</head>
+<body>
+<div class="viz-root">
+  <div class="card">
+    <p class="title">Atlas Diversified Master Fund, Ltd. 管理规模（GAV）</p>
+    <p class="subtitle">单位：十亿美元。仅本基金专属数据，不含Atlas Enhanced、Atlas Macro等同系列其他基金，也不含BAM公司整体口径。</p>
+    <table class="data-table">
+      <tr><th>时间</th><th>GAV</th><th>说明</th><th>来源</th></tr>
+      <tr><td>2021年3月</td><td>约$58亿</td><td>fundvendors.com披露的该基金filing history中最早一条快照，也是本基金成立后不久的规模</td><td><a href="https://fundvendors.com/funds/805-3542269104" target="_blank">fundvendors.com</a></td></tr>
+      <tr><td>2026年5月</td><td>$460亿</td><td>"Latest Gross Asset Value (GAV): $46.0B"，已通过独立WebFetch核实页面原文</td><td><a href="https://fundvendors.com/funds/805-3542269104" target="_blank">fundvendors.com</a></td></tr>
+    </table>
+    <div class="footnote">
+      另有一条独立的SEC Form D记录，对应本基金的美国Delaware feeder载体"Atlas Diversified Fund, L.P."（CIK 0001860070，与开曼主基金为关联但不同的法律实体）：2021年10月披露Total Amount Sold为555.1万美元（2名投资者），2022年5月更新为1240.8万美元（仍为2名投资者），最低认购额500万美元「<a href="https://www.sec.gov/Archives/edgar/data/1860070/000186007022000001/xslFormDX01/primary_doc.xml" target="_blank">SEC EDGAR</a>」。这两个数字量级远小于GAV，只反映这一个特定feeder通道募集的资本，不代表基金整体规模，仅作为补充参考列出，不纳入上表主口径。检索时间2026年8月，具体数字可能已变化。
+    </div>
+  </div>
+</div>
+</body>
+</html>
