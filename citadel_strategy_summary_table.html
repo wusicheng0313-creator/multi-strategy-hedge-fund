@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Citadel 五大投资主线：收益来源与组合作用</title>
+<style>
+  .viz-root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --page-plane:     #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --gridline:       #e1e0d9;
+    --series-1:       #2a78d6;
+    --border:         rgba(11,11,11,0.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) .viz-root {
+      color-scheme: dark;
+      --surface-1: #1a1a19; --page-plane: #0d0d0d; --text-primary: #ffffff;
+      --text-secondary: #c3c2b7; --text-muted: #898781; --gridline: #2c2c2a;
+      --series-1: #3987e5; --border: rgba(255,255,255,0.10);
+    }
+  }
+  :root[data-theme="dark"] .viz-root {
+    color-scheme: dark;
+    --surface-1: #1a1a19; --page-plane: #0d0d0d; --text-primary: #ffffff;
+    --text-secondary: #c3c2b7; --text-muted: #898781; --gridline: #2c2c2a;
+    --series-1: #3987e5; --border: rgba(255,255,255,0.10);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 16px; background: var(--page-plane);
+    font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    display: flex; justify-content: center;
+  }
+  .card { width: 100%; max-width: 1080px; background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 28px 28px 20px; }
+  .title { font-size: 18px; font-weight: 600; color: var(--text-primary); margin: 0 0 4px; }
+  .subtitle { font-size: 13px; color: var(--text-secondary); margin: 0 0 18px; line-height: 1.6; }
+  table.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  table.data-table th, table.data-table td { text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--gridline); color: var(--text-secondary); vertical-align: top; line-height: 1.55; }
+  table.data-table th { color: var(--text-muted); font-weight: 500; font-size: 11.5px; white-space: nowrap; }
+  table.data-table td:first-child { color: var(--text-primary); font-weight: 700; white-space: nowrap; }
+  table.data-table a { color: var(--text-secondary); }
+  .tag { display: inline-block; font-size: 10.5px; font-weight: 600; padding: 2px 7px; border-radius: 10px; background: rgba(42,120,214,0.12); color: var(--series-1); margin-bottom: 4px; }
+  .info-box {
+    background: rgba(42,120,214,0.06); border: 1px solid rgba(42,120,214,0.25); border-radius: 8px;
+    padding: 12px 16px; font-size: 12.5px; color: var(--text-secondary); line-height: 1.7; margin-top: 18px;
+  }
+  .info-box b { color: var(--text-primary); }
+  .footnote { font-size: 11px; color: var(--text-muted); margin-top: 16px; line-height: 1.7; border-top: 1px solid var(--gridline); padding-top: 12px; }
+  .footnote a { color: var(--text-muted); }
+</style>
+</head>
+<body>
+<div class="viz-root">
+  <div class="card">
+    <p class="title">Citadel 五大投资主线：收益来源与组合作用</p>
+    <p class="subtitle">官网披露的五条独立业务线，按创立时间/收入驱动因子排列。每条线均为独立核算单元，彼此风险类型严格隔离（信用团队不承担宏观风险，反之亦然），这是"相关性最小化"组合构建理念在组织架构上的直接体现。</p>
+    <table class="data-table">
+      <tr><th>业务线</th><th>核心机制</th><th>收益驱动因子</th><th>对组合的作用</th><th>来源</th></tr>
+      <tr>
+        <td>大宗商品<br><span class="tag">2001年起步</span></td>
+        <td>交易天然气、电力、天气衍生品、农产品、原油及成品油；"深度优于广度"，在最精细颗粒度上为市场建模，融合专业领域知识与先进建模技术</td>
+        <td>实物供需/天气/产能等大宗商品专属基本面因子，与利率、股票估值等金融资产定价逻辑基本独立</td>
+        <td>与金融资产相关性最低的一类收益来源，是五条线里"分散化贡献"最直接的一条；配备260余名投研人员+约100名专职工程师，日均处理17TB数据，技术投入是五条线里官网披露最具体的</td>
+        <td><a href="https://www.citadel.com/what-we-do/commodities/" target="_blank">citadel.com</a></td>
+      </tr>
+      <tr>
+        <td>信用与可转债<br><span class="tag">1990年起家策略</span></td>
+        <td>交易公司债、可转换债券、CDS、信用指数、银行贷款与CLO；"多元化、市场中性"方法，融合基本面与量化研究</td>
+        <td>信用利差这一独立风险因子，具体拆分为多空基本面公司信用、美国/国际可转债、欧洲信用、CLO四个子策略，覆盖八大行业板块</td>
+        <td>是Citadel历史最悠久的收益来源（创业初期核心即可转债套利），提供信用利差敞口，与纯股票、纯利率因子相关性较低，但在2008年流动性危机中曾因融资断裂集体失灵，是唯一有过系统性回撤案例的业务线</td>
+        <td><a href="https://www.citadel.com/what-we-do/credit-and-convertibles/" target="_blank">citadel.com</a></td>
+      </tr>
+      <tr>
+        <td>股票<br><span class="tag">规模最大、历史最悠久</span></td>
+        <td>市场中性方法，依托深度基本面研究与财务分析，叠加纪律化风险管理支持下的审慎组合构建；官方强制要求贝塔中性</td>
+        <td>个股特质性Alpha（idiosyncratic winners/losers），明确剥离市场beta与因子主题敞口</td>
+        <td>规模最大、投研人员最多（420余人），下设5个按时间顺序孵化的子品牌（Citadel Global Equities→Surveyor→Ashler→International Equities→Strategic Equity Investments），2025年完成超28,000场公司调研；因强制贝塔中性，是五条线里"与大盘方向性风险隔离最彻底"的一条</td>
+        <td><a href="https://www.citadel.com/what-we-do/equities/" target="_blank">citadel.com</a></td>
+      </tr>
+      <tr>
+        <td>固收宏观<br><span class="tag">利率/汇率/新兴市场</span></td>
+        <td>覆盖利率互换、主权债券、通胀、汇率、新兴市场、股票、大宗商品与信用；基于量化建模、宏观经济理解与货币政策判断运作相对价值与宏观策略</td>
+        <td>利率曲线、通胀预期、跨资产相对价值错配等宏观层面因子，与股票选股策略"几乎不同源"</td>
+        <td>拆分为相对价值（利率/债券RV、基差、MBS、互换利差）与宏观（利率/通胀/外汇/大宗商品/股票/新兴市场）两大子方向；210余名投研人员分布五地，团队协作机制为"共同识别和辩论最佳想法"，为组合提供与股票、信用均低相关的第三类因子来源</td>
+        <td><a href="https://www.citadel.com/what-we-do/fixed-income-and-macro/" target="_blank">citadel.com</a></td>
+      </tr>
+      <tr>
+        <td>全球量化策略<br><span class="tag">系统化/高换手</span></td>
+        <td>"全面自动化的交易策略"，量化研究员与工程师协作，覆盖阿尔法设计到组合构建、执行全流程；采用"agentic AI框架"提升研究员生产力</td>
+        <td>系统化、高频再平衡产生的短周期定价偏差与统计套利机会，覆盖"跨地域、跨资产类别、跨投资周期"</td>
+        <td>唯一以"人才密度而非团队规模"为增长逻辑的业务线（不披露具体人数）；提供与前四条线均低相关的高换手率收益来源，是分散化组合里的"第五个独立因子桶"，弥补了其余四条线均偏"中低频、基本面驱动"的同质化风险</td>
+        <td><a href="https://www.citadel.com/what-we-do/global-quantitative-strategies/" target="_blank">citadel.com</a></td>
+      </tr>
+    </table>
+    <div class="info-box">
+      <b>为什么是这五条线：</b>从收益驱动因子看，五条线大致覆盖了"实物商品基本面（大宗商品）→ 信用利差（信用与可转债）→ 个股特质Alpha（股票）→ 宏观/利率因子（固收宏观）→ 系统化统计套利（量化）"五类彼此低相关的因子来源，且股票线被强制贝塔中性、信用与宏观团队被严格禁止互相承担对方的风险类型——这种"因子来源差异化+组织边界强制隔离"的双重设计，本质上是把"相关性最小化"这一组合构建首要目标，从一句口号落地为具体的业务线划分方式：五条线不是五个规模不同的赛道，而是五个被有意设计成低相关的收益引擎。
+    </div>
+    <div class="footnote">
+      数据来源：Citadel官网"What We Do"各业务线页面（<a href="https://www.citadel.com/what-we-do/" target="_blank">总览</a>）；风险管理理念部分引自Risk.net对Citadel CRO Joanna Welsh的采访「<a href="https://www.risk.net/awards/7955800/hedge-fund-of-the-year-citadel" target="_blank">Risk.net</a>」。"为什么是这五条线"一栏为基于以上公开信息的分析性推断，非Citadel官方对外声明的选择逻辑，已在文中明确标注为推断而非官方确认表述。检索时间2026年8月，具体人员规模、业务线设置可能已变化。
+    </div>
+  </div>
+</div>
+</body>
+</html>
